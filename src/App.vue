@@ -43,7 +43,7 @@
             },
             data =>{
                 console.log('dataType:', data);
-                // alert(`data: ${data.reduce((sum, cur) => sum += cur.value, 0)}`);
+                alert(`returned ${data.length} ${dataType} records`);
             },
             err => {
                 console.error(err);
