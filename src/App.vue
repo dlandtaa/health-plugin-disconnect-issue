@@ -1,20 +1,23 @@
 <template>
     <img alt="Vue logo" src="./assets/logo.png" />
     <div>
-        <input type="button" @click="connect()" value="Connet"/>
+        <input type="button" @click="connect()" value="Connect"/>
     </div>
     <div>
-        <input type="button" @click="disconnect()" value="Disconnet"/>
+        <input type="button" @click="disconnect()" value="Disconnect"/>
     </div>
     <div>
-        <input type="button" @click="getSteps()" value="Get Steps"/>
+        <input type="button" @click="getData('steps')" value="Get Steps"/>
+    </div>
+    <div>
+        <input type="button" @click="getData('heart_rate')" value="Get Heart Rate"/>
     </div>
 </template>
 
 <script setup>
     function connect() {
         navigator.health.requestAuthorization(
-            ['steps'],
+            [{ read: ['steps'] }],
             data => {
                 console.log('authorization successful:', data);
                 alert('connected');
@@ -26,7 +29,7 @@
         );
     }
 
-    function getSteps() {
+    function getData(dataType) {
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - 1);
         const endDate = new Date();
@@ -35,12 +38,12 @@
             {
                 startDate,
                 endDate,
-                dataType: 'steps',
+                dataType,
                 limit: 1000
             },
-            steps =>{
-                console.log('steps:', steps);
-                alert(`steps: ${steps.reduce((sum, cur) => sum += cur.value, 0)}`);
+            data =>{
+                console.log('dataType:', data);
+                // alert(`data: ${data.reduce((sum, cur) => sum += cur.value, 0)}`);
             },
             err => {
                 console.error(err);
