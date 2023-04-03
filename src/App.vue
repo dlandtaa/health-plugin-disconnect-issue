@@ -1,7 +1,10 @@
 <template>
     <img alt="Vue logo" src="./assets/logo.png" />
     <div>
-        <input type="button" @click="connect()" value="Connect"/>
+        <input type="button" @click="connect(['steps', 'heart_rate'])" value="Connect Heart Rate and Steps"/>
+    </div>
+    <div>
+        <input type="button" @click="connect(['steps'])" value="Connect Steps Only"/>
     </div>
     <div>
         <input type="button" @click="disconnect()" value="Disconnect"/>
@@ -15,9 +18,9 @@
 </template>
 
 <script setup>
-    function connect() {
+    function connect(dataTypes) {
         navigator.health.requestAuthorization(
-            [{ read: ['steps'] }],
+            [{ read: dataTypes }],
             data => {
                 console.log('authorization successful:', data);
                 alert('connected');
